@@ -17,6 +17,15 @@
 #define CHAUFFAGE_MAX 39
 #define VENTILATION 100
 
+
+void adaptateur(){
+        #ifdef _WIN32
+        Sleep(1000);
+        #else
+        sleep(1);
+        #endif
+}
+
 float ValeurEclairage() {
     return (rand() % ECLAIRAGE);
 }
@@ -34,24 +43,17 @@ void Eclairage() {
         float lum = ValeurEclairage();
         envoiMessage(lum);
         printf("Luminosité générée: %f\n", lum);
-        #ifdef _WIN32
-        Sleep(1000);
-        #else
-        sleep(1);
-        #endif
+        adaptateur();
     }
 }
+
 
 void Chauffage() {
     while (1) {
         float temperature = ValeurChauffage();
         envoiMessage(temperature);
         printf("Température générée: %f°C\n", temperature);
-        #ifdef _WIN32
-        Sleep(1000);
-        #else
-        sleep(1);
-        #endif
+        adaptateur();
     }
 }
 
@@ -60,12 +62,7 @@ void Ventilation() {
         float air = ValeurVentilation();
         envoiMessage(air);
         printf("Débit d'air généré: %f\n", air);
-        #ifdef _WIN32
-        Sleep(1000);
-        #else
-        sleep(1);
-        #endif
-    }
+        adaptateur();}
 }
 
 int main() {

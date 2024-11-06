@@ -4,5 +4,6 @@
 void Eclairage();
 void Chauffage();
 void Ventilation();
+void adaptateur();
 
 #endif
