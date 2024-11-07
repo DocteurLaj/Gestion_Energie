@@ -26,6 +26,8 @@ void adaptateur(){
         #endif
 }
 
+
+
 float ValeurEclairage() {
     return (rand() % ECLAIRAGE);
 }
@@ -48,14 +50,15 @@ void Eclairage() {
 }
 
 
-void Chauffage() {
+void Chauffage(int id_p) {
     while (1) {
         float temperature = ValeurChauffage();
-        envoiMessage(temperature);
+       send_message(id_p, chauffage, temperature);
         printf("Température générée: %f°C\n", temperature);
         adaptateur();
     }
 }
+
 
 void Ventilation() {
     while (1) {
