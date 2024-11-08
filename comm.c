@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/ipc.h>
 #include <sys/msg.h>
 #include "comm.h"
 #include <time.h>
-
+#define MSG_KEY 1234 // Clé unique pour la file de messages
 
 // Définition des types de message pour chaque sous-système
 #define MSG_TYPE_ECLAIRAGE 1   // Type de message pour l'éclairage
@@ -26,7 +27,7 @@ int msg_id;
 
 
 // Fonction pour envoyer un message à la file // communication IPC
-void send_message(int sensor_id, const char* measure_type, float value) {
+void send_message(long sensor_id, const char* measure_type, float value) {
     int msg_id;
     struct message msg;
     time_t now = time(NULL);

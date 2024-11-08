@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #ifdef _WIN32
@@ -11,6 +12,8 @@
 #endif
 #include "comm.h"
 #include "comm.c"
+#define MSG_KEY 1234 // Clé unique pour la file de messages
+
 
 #define ECLAIRAGE 1000
 #define CHAUFFAGE_MIN 10
@@ -26,7 +29,7 @@ void adaptateur(){
         #endif
 }
 
-
+//...................................../  GENERATION DE VALUERS ALEATOIRE  /.............................................................
 
 float ValeurEclairage() {
     return (rand() % ECLAIRAGE);
@@ -39,34 +42,39 @@ float ValeurChauffage() {
 float ValeurVentilation() {
     return (rand() % VENTILATION);
 }
+//..........................................................................................................................................
 
-void Eclairage() {
-    while (1) {
-        float lum = ValeurEclairage();
-        envoiMessage(lum);
-        printf("Luminosité générée: %f\n", lum);
-        adaptateur();
+
+
+//.................................................../ BOUCLAGE DE VALUERS ALEATOIRE /.......................................................
+float Eclairage() {
+    while(1){
+    float lum = ValeurEclairage();
+    printf("Luminosité générée: %f\n", lum);
+    send_message(365, "eclairage", lum); // envoiye la valeur au server
+    adaptateur();
     }
+    return 0;
 }
 
-
-void Chauffage(int id_p) {
+void Chauffage() {
     while (1) {
         float temperature = ValeurChauffage();
-       send_message(id_p, chauffage, temperature);
         printf("Température générée: %f°C\n", temperature);
         adaptateur();
     }
 }
 
-
 void Ventilation() {
     while (1) {
         float air = ValeurVentilation();
-        envoiMessage(air);
+        
         printf("Débit d'air généré: %f\n", air);
-        adaptateur();}
+        adaptateur();
+        }
 }
+//...............................................................................................................................................
+
 
 int main() {
     pid_t pid_eclairage, pid_chauffage, pid_ventilation;

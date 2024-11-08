@@ -1,7 +1,7 @@
 #ifndef PROCESS_H
 #define PROCESS_H
 
-void Eclairage();
+float Eclairage();
 void Chauffage();
 void Ventilation();
 void adaptateur();
